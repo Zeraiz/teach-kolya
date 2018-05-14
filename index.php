@@ -6,7 +6,18 @@
 <body>
 <div id="content">
     <div class="container">
-        sssss
+        <form>
+            <div>
+                Первое число
+                <span id="first"></span>
+            </div>
+            <div>
+                Второе число
+                <span id="second"></span>
+            </div>
+            <input id="fieldForInput"/>
+            <div id="result"></div>
+        </form>
     </div>
 </div>
 <script src="template/index/js/script.js"></script>
