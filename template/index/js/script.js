@@ -5,25 +5,34 @@ var ui = {
     id: {
         firstValue: 'first',
         secondValue: 'second'
-    }
-    dsta: {
+    },
+    data: {
         first: 0,
         second: 0
     }
 
+};
+document.getElementById("fieldForInput").onkeypress=function (e) {
+    var charCode = getChar(e);
+
+    if (charCode >47 && charCode < 58 || charCode >93 && charCode < 112 || charCode == 13   ){
+        return true;
+    }else{
+        return false;
+    }
+    function getChar(event) {
+        if (event.which == null) { // IE
+            if (event.keyCode < 32) return null; // спец. символ
+            return event.keyCode
+        }
+        if (event.which !== 0 && event.charCode !== 0) { // все кроме IE
+            if (event.which < 32) return null; // спец. символ
+            return event.which; // остальные
+        }
+        return null; // спец. символ
+    }
 }
 
-function getChar(event) {
-    if (event.which == null) { // IE
-        if (event.keyCode < 32) return null; // спец. символ
-        return String.fromCharCode(event.keyCode)
-    }
-    if (event.which !== 0 && event.charCode !== 0) { // все кроме IE
-        if (event.which < 32) return null; // спец. символ
-        return String.fromCharCode(event.which); // остальные
-    }
-    return null; // спец. символ
-}
 
 
 function calculate(first, second, action) {
