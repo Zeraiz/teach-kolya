@@ -12,50 +12,80 @@ var ui = {
     }
 
 };
-document.getElementById("fieldForInput").onkeypress=function (e) {
+document.getElementById("fieldForInput").onkeypress = function (e) {
     var charCode = getChar(e);
-
-    if (charCode >47 && charCode < 58 || charCode >93 && charCode < 112 || charCode == 13   ){
-        return true;
-    }else{
-        return false;
+    console.log(e);
+    switch (true) {
+        case(charCode === 13):
+            parseString();
+            return false;
+        case(charCode > 47 && charCode < 58):
+        case(checkSign(charCode)):
+            return true;
+        default:
+            return false;
     }
     function getChar(event) {
         if (event.which == null) { // IE
-            if (event.keyCode < 32) return null; // спец. символ
             return event.keyCode
         }
         if (event.which !== 0 && event.charCode !== 0) { // все кроме IE
-            if (event.which < 32) return null; // спец. символ
             return event.which; // остальные
         }
         return null; // спец. символ
     }
+};
+
+function checkSign(code){
+    switch(true){
+        case(code === 95):
+        case(code === 43):
+        case(code === 42):
+        case(code === 47):
+        case(code === 45):
+            return true;
+        default:
+            return false;
+    }
 }
 
-
+function parseString() {
+    var el = document.getElementById("fieldForInput"),
+        elValue = el.value, i = 0, isSign = false;
+    while(!isNaN(elValue.charCodeAt(i))){
+        if(checkSign(elValue.charCodeAt(i))){
+            if(isSign !== false){
+                console.log('ss');
+            }
+            isSign = i;
+        }else{
+            isSign = false;
+        }
+        i++;
+    }
+}
 
 function calculate(first, second, action) {
     var result;
-    switch (action){
+    switch (action) {
 
         case ('+'):
-            result=first + second;
+            result = first + second;
             break;
         case ('-'):
-            result=first - second;
+            result = first - second;
             break;
         case ('*'):
-            result=first * second;
+            result = first * second;
             break;
         case ('/'):
-            result=first / second;
+            result = first / second;
             break;
         case ('%'):
-            result=first % second;
+            result = first % second;
             break;
         case ('^'):
-            result=first ^ second;
+            result = first ^ second;
             break;
         default:
             throw "нет такого действия";
