@@ -55,14 +55,20 @@ function parseString() {
     while(!isNaN(elValue.charCodeAt(i))){
         if(checkSign(elValue.charCodeAt(i))){
             if(isSign !== false){
-                console.log('ss');
+                el.value = elValue.substring(0, i)+ elValue.substring(i+1);
+                i--;
             }
-            isSign = i;
+            isSign = true;
         }else{
             isSign = false;
         }
         i++;
+        elValue = el.value
     }
+}
+
+
+
 }
 
 function calculate(first, second, action) {
