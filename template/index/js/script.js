@@ -25,6 +25,7 @@ document.getElementById("fieldForInput").onkeypress = function (e) {
         default:
             return false;
     }
+
     function getChar(event) {
         if (event.which == null) { // IE
             return event.keyCode
@@ -36,8 +37,8 @@ document.getElementById("fieldForInput").onkeypress = function (e) {
     }
 };
 
-function checkSign(code){
-    switch(true){
+function checkSign(code) {
+    switch (true) {
         case(code === 95):
         case(code === 43):
         case(code === 42):
@@ -52,27 +53,51 @@ function checkSign(code){
 function parseString() {
     var el = document.getElementById("fieldForInput"),
         elValue = el.value, i = 0, isSign = false;
-    while(!isNaN(elValue.charCodeAt(i))){
-        if(checkSign(elValue.charCodeAt(i))){
-            if(isSign !== false){
-                el.value = elValue.substring(0, i)+ elValue.substring(i+1);
+    while (!isNaN(elValue.charCodeAt(i))) {
+        if (checkSign(elValue.charCodeAt(i))) {
+            if (isSign !== false) {
+                el.value = elValue.substring(0, i) + elValue.substring(i + 1);
                 i--;
             }
             isSign = true;
-        }else{
+        } else {
             isSign = false;
         }
         i++;
         elValue = el.value
     }
+    parseNumber(elValue);
 }
 
+function parseNumber(elValue) {
+    var num = [], simbol = [], i = 0, str = elValue;
+    while (!isNaN(str.charCodeAt(i))) {
+        if (checkSign(str.charCodeAt(i))) {
+            num.push(str.substring(0, i));
+            simbol.push(str.substr(i, 1));
+            str = str.substring(i + 1);
+            i = 0;
 
+        }
+        i++;
+    }
+    num.push(str);
 
+    var sum = 0;
+    for (i = 0; i < num.length; i++) {
+        if (typeof(simbol[i]) === "undefined") {
+            sum = sum + parseFloat(num[i]);
+
+        } else
+            sum = calculate(sum, num[i], simbol[i]);
+        alert(sum)
+    }
 }
 
 function calculate(first, second, action) {
     var result;
+    first = parseFloat(first)
+    second = parseFloat(second);
     switch (action) {
 
         case ('+'):
